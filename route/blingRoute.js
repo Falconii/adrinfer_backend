@@ -10,6 +10,16 @@ const router = express.Router();
 //const ACESSTOKEN = "d38aa4a8b461d5dd31129c7b8fb77ad2910d2f1e"
 
 
+router.get('/api/bling/recebercode', function(req, res) {
+
+    if (req.query.code) {
+        variaveis.setCode = req.query.code;
+    }
+    console.log(req)
+
+    res.status(200).json({ message: "OK" });
+
+})
 
 
 router.get('/api/bling/token', async function(req, response) {

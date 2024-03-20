@@ -2,6 +2,8 @@ let ACESSTOKEN = "f69223e0d7af02833b3ae7d771052dddb01f39a1";
 
 let REFRESH_TOKEN = "64019c25fd1e3a32eb72f141c9b50981be944860"
 
+let CODE = "8e081863b4f491d24b91bb9402b9d77067b05dcc"
+
 exports.setAcessToken = function(value) {
 
     ACESSTOKEN = value;
@@ -43,5 +45,18 @@ exports.getCredentialsBase64 = function(cliente) {
     }
 
     return credBase64;
+
+}
+
+exports.getCode = function() {
+
+    return CODE;
+
+}
+
+
+exports.setCode = function(value) {
+
+    CODE = VALUE;
 
 }
