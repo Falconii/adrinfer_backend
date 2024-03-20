@@ -57,6 +57,6 @@ exports.getCode = function() {
 
 exports.setCode = function(value) {
 
-    CODE = VALUE;
+    CODE = value;
 
 }

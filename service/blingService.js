@@ -1,7 +1,8 @@
 const axios = require('axios')
 const variaveis = require('../global/variaveis')
-    //const ACESSTOKEN = "824066939464910bcb89eee3bd77ace9e17aaf5e"
-    //const ACESSTOKEN = "b878e80a59a823c2339cff192ca67888070813e8"
+const qs = require('querystring');
+//const ACESSTOKEN = "824066939464910bcb89eee3bd77ace9e17aaf5e"
+//const ACESSTOKEN = "b878e80a59a823c2339cff192ca67888070813e8"
 const ID_DEPOSITO = 14887604950
 const ID_CATEGORIA = 9260994
 
