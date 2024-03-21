@@ -57,6 +57,7 @@ exports.getCode = function() {
 
 exports.setCode = function(value) {
 
+    console.log(`CODE TROCADO DE ${CODE}  PARA ${value}`)
     CODE = value;
 
 }

@@ -12,14 +12,31 @@ const router = express.Router();
 
 router.get('/api/bling/recebercode', async function(req, res) {
 
+    console.log("ENTREI NA recebercode");
+
     if (req.query.code) {
 
-        console.log("Alterado code ", variaveis.getCode(), req.query.code)
         variaveis.setCode(req.query.code);
 
-        //const response = await blingSrv.getToken(req.query.code)
+        try {
 
-        //console.log(response.data);
+            const retorno = await blingSrv.getToken();
+
+            variaveis.setAcessToken(retorno.access_token);
+
+            variaveis.setRefreshToken(retorno.refresh_token);
+
+            response.status(200).json(retorno);
+
+        } catch (error) {
+
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                response.status(200).json({ message: error.response.status });
+            }
+        }
+
 
     }
 
@@ -30,6 +47,7 @@ router.get('/api/bling/recebercode', async function(req, res) {
 
 router.get('/api/bling/token', async function(req, response) {
 
+    /*
     const data = {
         'grant_type': 'authorization_code',
         'code': variaveis.getCode()
@@ -45,21 +63,44 @@ router.get('/api/bling/token', async function(req, response) {
         data: qs.stringify(data),
     }
 
+    */
 
-    axios(options).then(function(res) {
-        console.log(res);
-        const retorno = res.data;
+    try {
+
+        const retorno = await blingSrv.getToken();
+
         variaveis.setAcessToken(retorno.access_token);
-        variaveis.setRefreshToken(retorno.refresh_token)
+
+        variaveis.setRefreshToken(retorno.refresh_token);
+
         response.status(200).json(retorno);
-    }).catch(function(error) {
-        let status = 200;
+
+    } catch (error) {
+
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
             response.status(200).json({ message: error.response.status });
         }
-    });
+    }
+
+
+    /*
+        axios(options).then(function(res) {
+            console.log(res);
+            const retorno = res.data;
+            variaveis.setAcessToken(retorno.access_token);
+            variaveis.setRefreshToken(retorno.refresh_token)
+            response.status(200).json(retorno);
+        }).catch(function(error) {
+            let status = 200;
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                response.status(200).json({ message: error.response.status });
+            }
+        });
+        */
 })
 
 
@@ -106,18 +147,22 @@ router.get('/api/bling/refreshtoken', function(req, response) {
 router.get('/api/bling/getcode', function(req, response) {
 
     const options = {
-        url: 'https://www.bling.com.br/b/Api/v3/oauth/authorize?response_type=code&client_id=ad4ef071ff95286ac58508d99f21c195266fab6a&state=13d3fbe4d7370fc50cd3de98b0f23f4c',
+        url: 'https://www.bling.com.br/Api/v3/oauth/authorize?response_type=code&client_id=ad4ef071ff95286ac58508d99f21c195266fab6a&state=122a1900f33fa161a1d9e3f8da605937',
+        headers: {
+            'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
+            'Accept': '*/*',
+        },
         method: 'get',
     }
 
-    axios(options).then(function(res) {
-        console.log(res);
-        const retorno = res.data
-        response.status(200).json(retorno);
-    }).catch(function(err) {
-        console.log("error = " + err);
-        const retorno = { message: err.emssage };
-        response.status(200).json(retorno);
+    axios.get(options).then(function(res) {
+        response.status(200).json({ message: "Code Solicitado !" });
+    }).catch(function(error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            response.status(200).json({ message: error.response.status });
+        }
     });
 
 })

@@ -7,11 +7,11 @@ const ID_DEPOSITO = 14887604950
 const ID_CATEGORIA = 9260994
 
 
-exports.getToken = async function(code) {
+exports.getToken = async function() {
 
     const data = {
         'grant_type': 'authorization_code',
-        'code': code
+        'code': variaveis.getCode()
     };
     const options = {
         url: 'https://www.bling.com.br/Api/v3/oauth/token',
@@ -24,9 +24,9 @@ exports.getToken = async function(code) {
         data: qs.stringify(data),
     }
 
-    response = await axios(options);
+    const retorno = await axios(options);
 
-    return response.data;
+    return retorno.data
 
 }
 
