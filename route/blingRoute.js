@@ -7,8 +7,6 @@ const variaveis = require('../global/variaveis')
 const qs = require('querystring');
 const router = express.Router();
 
-//const ACESSTOKEN = "d38aa4a8b461d5dd31129c7b8fb77ad2910d2f1e"
-
 
 router.get('/api/bling/recebercode', async function(req, res) {
 
@@ -46,24 +44,6 @@ router.get('/api/bling/recebercode', async function(req, res) {
 
 
 router.get('/api/bling/token', async function(req, response) {
-
-    /*
-    const data = {
-        'grant_type': 'authorization_code',
-        'code': variaveis.getCode()
-    };
-    const options = {
-        url: 'https://www.bling.com.br/Api/v3/oauth/token',
-        method: 'POST',
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Authorization': `Basic ${variaveis.getCredentialsBase64(1)}`,
-            'Accept': '1.0',
-        },
-        data: qs.stringify(data),
-    }
-
-    */
 
     try {
 
@@ -309,7 +289,6 @@ router.get('/api/bling/getprodutoSimplebyids', async function(req, resp) {
     }
 
 })
-
 
 router.get('/api/bling/sincronizarsaldo', async function(req, resp) {
     let idsProdutos = [];
