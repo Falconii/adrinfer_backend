@@ -196,9 +196,7 @@ router.get('/api/bling/getprodutos', function(req, response) {
 
 })
 
-router.get('/api/bling/getdepositos', function(req, response) {
-    const lixo = `https://www.bling.com.br/Api/v3/depositos`;
-    console.log(lixo)
+router.get('/api/bling/getdepositos', async function(req, res) {
     const options = {
         url: `https://www.bling.com.br/Api/v3/depositos`,
         method: 'get',
@@ -208,6 +206,11 @@ router.get('/api/bling/getdepositos', function(req, response) {
         }
     }
 
+    depositos = await axios(options);
+
+    res.status(200).json(depositos);
+
+    /*
     axios(options).then(function(res) {
         const retorno = res.data.data
         response.status(200).json(retorno);
@@ -216,7 +219,7 @@ router.get('/api/bling/getdepositos', function(req, response) {
         const retorno = { message: err.message };
         response.status(200).json(retorno);
     });
-
+*/
 
 })
 
@@ -324,7 +327,7 @@ router.get('/api/bling/sincronizarsaldo', async function(req, resp) {
         })
         for (const [index, dado] of listaWork.entries()) {
             if (dado.saldo_bling != dado.saldo_chg) {
-                console.log("Produto - ", dado.id, dado.saldo_bling, dado.saldo_chg);
+                console.log("Produto - ", dado.id, dado.nome, dado.saldo_bling, dado.saldo_chg);
                 await blingSrv.postAjustaSaldo(dado.id_deposito, dado.id, dado.saldo_chg, dado.preco, "AJUSTE AUTOMÁTICO CHG")
                 contador++;
             }

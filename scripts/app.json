@@ -14,6 +14,135 @@
                 "script_src": "C://Repositorios Git//Afrinfer//backend//scripts"
             },
             "tables": [{
+                    "name": "tarefas",
+                    "fields": [{
+                            "name": "id_empresa",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        },
+                        {
+                            "name": "id",
+                            "type": "serial",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        },
+                        {
+                            "name": "descricao",
+                            "type": "varchar",
+                            "length": 50,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        }, {
+                            "name": "agenda",
+                            "type": "timestamp",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        }, {
+                            "name": "inicial",
+                            "type": "timestamp",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        }, {
+                            "name": "final",
+                            "type": "timestamp",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        },
+                        {
+                            "name": "qtd_total",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        }, {
+                            "name": "status",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        },
+                        {
+                            "name": "user_insert",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        },
+                        {
+                            "name": "user_update",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        }
+                    ],
+                    "inner_join": [{
+                        "name": "empresas",
+                        "inner_alias": "emp",
+                        "inner_on": "emp.id_empresa = tarefa.id_empresa ",
+                        "inner_fields": [{
+                            "name": "razao",
+                            "as_col": "emp_razao",
+                            "tipo": "char"
+                        }]
+                    }],
+                    "left_join": [],
+                    "primaryKey": [{
+                            "key": "id_empresa"
+                        },
+                        {
+                            "key": "id"
+                        }
+                    ],
+                    "variables": {
+                        "getone": "tarefa",
+                        "getall": "tarefas",
+                        "alias": "tarefa"
+                    },
+                    "where": {
+                        "parametro_01": [
+                            { "name": "id_empresa", "filtro": "S", "atividador": " !== 0 ", "tipo": "number", "padrao": 0 },
+                            { "name": "id", "filtro": "S", "atividador": " !== 0 ", "tipo": "number", "padrao": 0 },
+                            { "name": "pagina", "filtro": "N", "atividador": "", "tipo": "number", "padrao": 0 },
+                            { "name": "tamPagina", "filtro": "N", "atividador": "", "tipo": "number", "padrao": 50 },
+                            { "name": "contador", "filtro": "N", "atividador": "", "tipo": "string", "padrao": "N" },
+                            { "name": "orderby", "filtro": "N", "atividador": "", "tipo": "string", "padrao": "" },
+                            { "name": "sharp", "filtro": "N", "atividador": "", "tipo": "boolean", "padrao": "false" }
+                        ]
+                    },
+                    "orderby": [
+                        { "label": "", "comparativo": " != '' ", "key": "tarefa.id_empresa,tarefa.inicial" },
+                        { "label": "Código", "comparativo": " != 0 ", "key": "tarefa.id_empresa,tarefa.inicial" }
+                    ],
+                    "tablespace": "Producao"
+                },
+                {
                     "name": "empresas",
                     "fields": [{
                             "name": "id",
@@ -32,7 +161,8 @@
                             "nulo": "N",
                             "padrao": "",
                             "validacao": []
-                        }, {
+                        },
+                        {
                             "name": "razao",
                             "type": "varchar",
                             "length": 40,
@@ -57,7 +187,8 @@
                                 { "key": "require", "value": "true" },
                                 { "key": "maxLength", "value": 150 }
                             ]
-                        }, {
+                        },
+                        {
                             "name": "cliente_secret",
                             "type": "varchar",
                             "length": 150,
@@ -134,14 +265,30 @@
                                 { "key": "require", "value": "true" },
                                 { "key": "maxLength", "value": 100 }
                             ]
+                        }, {
+                            "name": "id_deposito",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        }, {
+                            "name": "id_categoria",
+                            "type": "int4",
+                            "length": 0,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
                         },
                         {
                             "name": "ativo",
-                            "type": "var",
+                            "type": "char",
                             "length": 1,
                             "precision": 0,
                             "nulo": "N",
-                            "padrao": "N",
+                            "padrao": "S",
                             "validacao": []
                         },
                         {
@@ -195,134 +342,6 @@
                     "tablespace": "Producao"
                 },
                 {
-                    "name": "tarefas",
-                    "fields": [{
-                            "name": "id_empresa",
-                            "type": "int4",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        },
-                        {
-                            "name": "id",
-                            "type": "serial",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        },
-                        {
-                            "name": "descricao",
-                            "type": "varchar",
-                            "length": 50,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        }, {
-                            "name": "agenda",
-                            "type": "timestamp",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        }, {
-                            "name": "inicial",
-                            "type": "timestamp",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        }, {
-                            "name": "final",
-                            "type": "timestamp",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        },
-                        {
-                            "name": "qtd_total",
-                            "type": "int",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        }, {
-                            "name": "qtd_erro",
-                            "type": "Date",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        }, {
-                            "name": "status",
-                            "type": "int",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        },
-                        {
-                            "name": "user_insert",
-                            "type": "int4",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        },
-                        {
-                            "name": "user_update",
-                            "type": "int4",
-                            "length": 0,
-                            "precision": 0,
-                            "nulo": "N",
-                            "padrao": "",
-                            "validacao": []
-                        }
-                    ],
-                    "inner_join": [],
-                    "left_join": [],
-                    "primaryKey": [{
-                            "key": "id_empresa"
-                        },
-                        {
-                            "key": "id"
-                        }
-                    ],
-                    "variables": {
-                        "getone": "taerfa",
-                        "getall": "taerfas",
-                        "alias": "taerfa"
-                    },
-                    "where": {
-                        "parametro_01": [
-                            { "name": "id_empresa", "filtro": "S", "atividador": " !== 0 ", "tipo": "number", "padrao": 0 },
-                            { "name": "id", "filtro": "S", "atividador": " !== 0 ", "tipo": "number", "padrao": 0 },
-                            { "name": "pagina", "filtro": "N", "atividador": "", "tipo": "number", "padrao": 0 },
-                            { "name": "tamPagina", "filtro": "N", "atividador": "", "tipo": "number", "padrao": 50 },
-                            { "name": "contador", "filtro": "N", "atividador": "", "tipo": "string", "padrao": "N" },
-                            { "name": "orderby", "filtro": "N", "atividador": "", "tipo": "string", "padrao": "" },
-                            { "name": "sharp", "filtro": "N", "atividador": "", "tipo": "boolean", "padrao": "false" }
-                        ]
-                    },
-                    "orderby": [
-                        { "label": "", "comparativo": " != '' ", "key": "tarefa.id_empresa,tarefa.inicial" },
-                        { "label": "Código", "comparativo": " != 0 ", "key": "tarefa.id_empresa,tarefa.inicial" }
-                    ],
-                    "tablespace": "Producao"
-                },
-                {
                     "name": "usuarios",
                     "fields": [{
                             "name": "id_empresa",
@@ -353,11 +372,11 @@
                         },
                         {
                             "name": "ativo",
-                            "type": "var",
+                            "type": "char",
                             "length": 1,
                             "precision": 0,
                             "nulo": "N",
-                            "padrao": "N",
+                            "padrao": "S",
                             "validacao": []
                         },
                         {
@@ -416,7 +435,7 @@
             "parametros": []
         },
         "frontend": {
-            "src": "C://Repositorios Git//Afrinfer//backend//frontend//src//app",
+            "src": "C://Repositorios Git//Afrinfer//frontend//src//app",
             "server": {
                 "includes": [{
                         "variable": "express",
