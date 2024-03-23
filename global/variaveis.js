@@ -1,8 +1,12 @@
-let ACESSTOKEN = "f69223e0d7af02833b3ae7d771052dddb01f39a1";
+let ACCESSTOKEN = "f69223e0d7af02833b3ae7d771052dddb01f39a1";
 
 let REFRESH_TOKEN = "64019c25fd1e3a32eb72f141c9b50981be944860"
 
 let CODE = "8e081863b4f491d24b91bb9402b9d77067b05dcc"
+
+let IDDEPOSITO = 14887604950;
+
+let IDCATEGORIA = 9260994;
 
 exports.setAcessToken = function(value) {
 
@@ -59,5 +63,37 @@ exports.setCode = function(value) {
 
     console.log(`CODE TROCADO DE ${CODE}  PARA ${value}`)
     CODE = value;
+
+    return;
+
+}
+
+exports.getIdDeposito = function() {
+
+    return IDDEPOSITO;
+
+}
+
+
+exports.setIdDeposito = function(value) {
+
+    IDDEPOSITO = value;
+
+    return;
+
+}
+
+exports.getIdCategoria = function() {
+
+    return IDCATEGORIA;
+
+}
+
+
+exports.setIdCategoria = function(value) {
+
+    IDCATEGORIA = value;
+
+    return;
 
 }

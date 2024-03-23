@@ -1,0 +1,40 @@
+const empresaSrv = require('../service/empresaService');
+const blingSrv = require('../service/blingService.js');
+const variaveis = require('../global/variaveis')
+
+
+exports.getAmbiente = async function(id_empresa) {
+
+    try {
+
+        const emp = empresaSrv.getEmpresa(2);
+
+        variaveis.setCode(emp.code);
+
+        variaveis.setAcessToken(emp.access_token);
+
+        variaveis.setRefreshToken(emp.refresh_token);
+
+        variaveis.setIdDeposito(emp.id_deposito);
+
+        variaveis.setIdCategoria(emp.id_categoria);
+
+        await blingSrv.getRefreshToken();
+
+        console.log("TOKEN ATUALIZADO COM SUCESSO!")
+
+
+    } catch (error) {
+
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            res.status(200).json({ message: error.response.status });
+        }
+    }
+
+
+
+
+
+}

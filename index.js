@@ -92,6 +92,9 @@ app.use(allowCors);
 
 app.use('/', require('./route/helloRoute.js'));
 app.use('/', require('./route/blingRoute.js'));
+app.use('/', require('./route/empresaRoute.js'));
+app.use('/', require('./route/tarefaRoute.js'));
+app.use('/', require('./route/usuarioRoute.js'));
 
 app.listen(PORT, () => { console.log(`Servidor No Ar. Porta ${PORT}`); });
 

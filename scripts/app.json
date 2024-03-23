@@ -241,7 +241,7 @@
                             ]
                         },
                         {
-                            "name": "token",
+                            "name": "access_token",
                             "type": "varchar",
                             "length": 100,
                             "precision": 0,
@@ -254,7 +254,7 @@
                             ]
                         },
                         {
-                            "name": "refresh_code",
+                            "name": "refresh_token",
                             "type": "varchar",
                             "length": 100,
                             "precision": 0,

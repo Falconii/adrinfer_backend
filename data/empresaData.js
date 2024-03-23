@@ -12,8 +12,8 @@ return [
 			Empresa.link, 
 			Empresa.url_redirecionamento, 
 			Empresa.code, 
-			Empresa.token, 
-			Empresa.refresh_code, 
+			Empresa.access_token, 
+			Empresa.refresh_token, 
 			Empresa.id_deposito, 
 			Empresa.id_categoria, 
 			Empresa.ativo, 
@@ -32,8 +32,8 @@ exports.getEmpresa = function(id){
 			,  emp.link as  link  
 			,  emp.url_redirecionamento as  url_redirecionamento  
 			,  emp.code as  code  
-			,  emp.token as  token  
-			,  emp.refresh_code as  refresh_code  
+			,  emp.access_token as  access_token  
+			,  emp.refresh_token as  refresh_token  
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
 			,  emp.ativo as  ativo  
@@ -94,8 +94,8 @@ if (params) {
 			,  emp.link as  link  
 			,  emp.url_redirecionamento as  url_redirecionamento  
 			,  emp.code as  code  
-			,  emp.token as  token  
-			,  emp.refresh_code as  refresh_code  
+			,  emp.access_token as  access_token  
+			,  emp.refresh_token as  refresh_token  
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
 			,  emp.ativo as  ativo  
@@ -114,8 +114,8 @@ if (params) {
 			,  emp.link as  link  
 			,  emp.url_redirecionamento as  url_redirecionamento  
 			,  emp.code as  code  
-			,  emp.token as  token  
-			,  emp.refresh_code as  refresh_code  
+			,  emp.access_token as  access_token  
+			,  emp.refresh_token as  refresh_token  
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
 			,  emp.ativo as  ativo  
@@ -135,8 +135,8 @@ if (params) {
 		 ,   link 
 		 ,   url_redirecionamento 
 		 ,   code 
-		 ,   token 
-		 ,   refresh_code 
+		 ,   access_token 
+		 ,   refresh_token 
 		 ,   id_deposito 
 		 ,   id_categoria 
 		 ,   ativo 
@@ -151,8 +151,8 @@ if (params) {
 		 ,   '${empresa.link}' 
 		 ,   '${empresa.url_redirecionamento}' 
 		 ,   '${empresa.code}' 
-		 ,   '${empresa.token}' 
-		 ,   '${empresa.refresh_code}' 
+		 ,   '${empresa.access_token}' 
+		 ,   '${empresa.refresh_token}' 
 		 ,   ${empresa.id_deposito} 
 		 ,   ${empresa.id_categoria} 
 		 ,   '${empresa.ativo}' 
@@ -172,8 +172,8 @@ if (params) {
  		 ,   link = '${empresa.link}' 
  		 ,   url_redirecionamento = '${empresa.url_redirecionamento}' 
  		 ,   code = '${empresa.code}' 
- 		 ,   token = '${empresa.token}' 
- 		 ,   refresh_code = '${empresa.refresh_code}' 
+ 		 ,   access_token = '${empresa.access_token}' 
+ 		 ,   refresh_token = '${empresa.refresh_token}' 
  		 ,   id_deposito = ${empresa.id_deposito} 
  		 ,   id_categoria = ${empresa.id_categoria} 
  		 ,   ativo = '${empresa.ativo}' 

@@ -1,7 +1,9 @@
 const express = require('express');
+const empresaSrv = require('../service/empresaService');
 const axios = require('axios')
 const blingSrv = require('../service/blingService.js');
 const chgSrv = require('../service/chgService.js');
+
 const variaveis = require('../global/variaveis')
 
 const qs = require('querystring');
@@ -9,6 +11,9 @@ const router = express.Router();
 
 
 router.get('/api/bling/recebercode', async function(req, res) {
+
+    let empresa = {};
+
 
     console.log("ENTREI NA recebercode");
 
@@ -24,21 +29,39 @@ router.get('/api/bling/recebercode', async function(req, res) {
 
             variaveis.setRefreshToken(retorno.refresh_token);
 
-            response.status(200).json(retorno);
+            try {
+
+                const emp = await empresaSrv.getEmpresa(2);
+
+                emp.code = req.query.code;
+                emp.access_token = retorno.access_token;
+                emp.refresh_token = retorno.refresh_token;
+
+                const empAlterada = await empresaSrv.updateEmpresa(emp);
+
+                console.log(empAlterada);
+
+                res.status(200).json(req.query.code);
+
+            } catch (err) {
+
+                res.status(200).json({ "message": "Falha Na Atualização da Empresa" });
+
+            }
 
         } catch (error) {
 
             if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
-                response.status(200).json({ message: error.response.status });
+                res.status(200).json({ message: error.response.status });
             }
         }
 
 
     }
 
-    res.status(200).json(req.query.code);
+
 
 })
 
@@ -206,7 +229,7 @@ router.get('/api/bling/getdepositos', async function(req, res) {
         }
     }
 
-    depositos = await axios(options);
+    const depositos = await axios(options);
 
     res.status(200).json(depositos);
 

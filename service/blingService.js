@@ -30,6 +30,37 @@ exports.getToken = async function() {
 
 }
 
+exports.getRefreshToken = async function() {
+
+
+    const data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': variaveis.getRefreshToken()
+    };
+    const options = {
+        url: 'https://www.bling.com.br/Api/v3/oauth/token',
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': `Basic ${variaveis.getCredentialsBase64}`,
+            'Accept': '1.0',
+        },
+        data: qs.stringify(data),
+    }
+
+    try {
+
+        const response = axios(options)
+        const retorno = response.data.data
+        variaveis.setAcessToken = retorno.access_token
+        variaveis.setRefreshToken = retorno.refresh_token
+    } catch (err) {
+
+        throw err
+
+    }
+
+}
 exports.getProdutoFullById = async function(id_produto) {
 
     let lista = {}
@@ -161,5 +192,25 @@ exports.getListaWork = async function() {
         throw err
 
     }
+
+};
+
+exports.getDepositos = async function() {
+
+
+    const options = {
+        url: `https://www.bling.com.br/Api/v3/depositos`,
+        method: 'get',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${variaveis.getAcessToken()}`
+        }
+    }
+
+    const depositos = await axios(options);
+
+
+    return depositos;
+
 
 };
