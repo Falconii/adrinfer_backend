@@ -32,7 +32,7 @@ exports.getToken = async function() {
 
 exports.getRefreshToken = async function() {
 
-
+    console.log("getRefreshToken", variaveis.getRefreshToken());
     const data = {
         'grant_type': 'refresh_token',
         'refresh_token': variaveis.getRefreshToken()
@@ -42,7 +42,7 @@ exports.getRefreshToken = async function() {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'Authorization': `Basic ${variaveis.getCredentialsBase64}`,
+            'Authorization': `Basic ${variaveis.getCredentialsBase64(1)}`,
             'Accept': '1.0',
         },
         data: qs.stringify(data),
@@ -50,10 +50,12 @@ exports.getRefreshToken = async function() {
 
     try {
 
-        const response = axios(options)
-        const retorno = response.data.data
+        const response = await axios(options)
+        const retorno = response.data;
+        console.log("Novo Token: ", retorno);
         variaveis.setAcessToken = retorno.access_token
         variaveis.setRefreshToken = retorno.refresh_token
+        return retorno;
     } catch (err) {
 
         throw err
@@ -61,6 +63,7 @@ exports.getRefreshToken = async function() {
     }
 
 }
+
 exports.getProdutoFullById = async function(id_produto) {
 
     let lista = {}
@@ -195,6 +198,27 @@ exports.getListaWork = async function() {
 
 };
 
+exports.getCategorias = async function() {
+    const options = {
+        url: `https://www.bling.com.br/Api/v3/categorias/produtos`,
+        method: 'get',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${variaveis.getAcessToken()}`
+        }
+    }
+
+    try {
+        const categorias = await axios(options);
+
+        return categorias.data.data;
+
+    } catch (err) {
+        throw err
+    }
+
+}
+
 exports.getDepositos = async function() {
 
 
@@ -207,7 +231,16 @@ exports.getDepositos = async function() {
         }
     }
 
-    const depositos = await axios(options);
+    try {
+
+
+        const depositos = await axios(options);
+
+        return depositos.data.data;
+
+    } catch (error) {
+        throw error
+    }
 
 
     return depositos;

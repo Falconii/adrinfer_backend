@@ -17,6 +17,7 @@ return [
 			Empresa.id_deposito, 
 			Empresa.id_categoria, 
 			Empresa.ativo, 
+			Empresa.tempo, 
 			Empresa.user_insert, 
 			Empresa.user_update, 
  ]; 
@@ -37,6 +38,7 @@ exports.getEmpresa = function(id){
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
 			,  emp.ativo as  ativo  
+			,  emp.tempo as  tempo  
 			,  emp.user_insert as  user_insert  
 			,  emp.user_update as  user_update    
  			FROM empresas emp 	     
@@ -78,6 +80,24 @@ if (params) {
 			where += `emp.cnpj_cpf like '%${params.cnpj_cpf.trim()}%' `;
 		}
 	}
+	if(params.ativo.trim()  !== ''){
+		if (where != "") where += " and ";
+		if (params.sharp) { 
+			 where +=  `emp.ativo = '${params.ativo}' `;
+		} else 
+		{
+			where += `emp.ativo like '%${params.ativo.trim()}%' `;
+		}
+	}
+	if(params.cliente_id.trim()  !== ''){
+		if (where != "") where += " and ";
+		if (params.sharp) { 
+			 where +=  `emp.cliente_id = '${params.cliente_id}' `;
+		} else 
+		{
+			where += `emp.cliente_id like '%${params.cliente_id.trim()}%' `;
+		}
+	}
 	if (where != "") where = " where " + where;
 	if (params.contador == 'S') {
 		sqlStr = `SELECT COALESCE(COUNT(*),0) as total 
@@ -99,6 +119,7 @@ if (params) {
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
 			,  emp.ativo as  ativo  
+			,  emp.tempo as  tempo  
 			,  emp.user_insert as  user_insert  
 			,  emp.user_update as  user_update     
 			FROM empresas emp      
@@ -119,6 +140,7 @@ if (params) {
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
 			,  emp.ativo as  ativo  
+			,  emp.tempo as  tempo  
 			,  emp.user_insert as  user_insert  
 			,  emp.user_update as  user_update    
 			FROM empresas emp			     `;
@@ -140,6 +162,7 @@ if (params) {
 		 ,   id_deposito 
 		 ,   id_categoria 
 		 ,   ativo 
+		 ,   tempo 
 		 ,   user_insert 
 		 ,   user_update 
 		 ) 
@@ -153,9 +176,10 @@ if (params) {
 		 ,   '${empresa.code}' 
 		 ,   '${empresa.access_token}' 
 		 ,   '${empresa.refresh_token}' 
-		 ,   ${empresa.id_deposito} 
-		 ,   ${empresa.id_categoria} 
+		 ,   '${empresa.id_deposito}' 
+		 ,   '${empresa.id_categoria}' 
 		 ,   '${empresa.ativo}' 
+		 ,   ${empresa.tempo} 
 		 ,   ${empresa.user_insert} 
 		 ,   ${empresa.user_update} 
 		 ) 
@@ -174,9 +198,10 @@ if (params) {
  		 ,   code = '${empresa.code}' 
  		 ,   access_token = '${empresa.access_token}' 
  		 ,   refresh_token = '${empresa.refresh_token}' 
- 		 ,   id_deposito = ${empresa.id_deposito} 
- 		 ,   id_categoria = ${empresa.id_categoria} 
+ 		 ,   id_deposito = '${empresa.id_deposito}' 
+ 		 ,   id_categoria = '${empresa.id_categoria}' 
  		 ,   ativo = '${empresa.ativo}' 
+ 		 ,   tempo = ${empresa.tempo} 
  		 ,   user_insert = ${empresa.user_insert} 
  		 ,   user_update = ${empresa.user_update} 
  		 where id = ${empresa.id}  returning * `;

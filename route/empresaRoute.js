@@ -126,6 +126,7 @@ router.post("/api/empresas",async function(req, res) {/*
 		"razao":"", 
 		"cnpj_cpf":"", 
 		"ativo":"", 
+		"cliente_id":"", 
 		"pagina":0, 
 		"tamPagina":50, 
 		"contador":"N", 

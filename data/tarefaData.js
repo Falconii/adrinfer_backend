@@ -6,11 +6,13 @@ exports.getCampos = function(Tarefa){
 return [ 
 			Tarefa.id_empresa, 
 			Tarefa.id, 
+			Tarefa.id_usuario, 
 			Tarefa.descricao, 
 			Tarefa.agenda, 
 			Tarefa.inicial, 
 			Tarefa.final, 
 			Tarefa.qtd_total, 
+			Tarefa.qtd_erro, 
 			Tarefa.status, 
 			Tarefa.user_insert, 
 			Tarefa.user_update, 
@@ -21,11 +23,13 @@ exports.getTarefa = function(id_empresa,id){
 	strSql = ` select   
 			   tarefa.id_empresa as  id_empresa  
 			,  tarefa.id as  id  
+			,  tarefa.id_usuario as  id_usuario  
 			,  tarefa.descricao as  descricao  
 			, to_char(tarefa.agenda, 'YYYY-MM-DD HH24:MI GMT-0300') as agenda  
 			, to_char(tarefa.inicial, 'YYYY-MM-DD HH24:MI GMT-0300') as inicial  
 			, to_char(tarefa.final, 'YYYY-MM-DD HH24:MI GMT-0300') as final  
 			,  tarefa.qtd_total as  qtd_total  
+			,  tarefa.qtd_erro as  qtd_erro  
 			,  tarefa.status as  status  
 			,  tarefa.user_insert as  user_insert  
 			,  tarefa.user_update as  user_update  
@@ -65,11 +69,13 @@ if (params) {
 		strSql = `select   
 			   tarefa.id_empresa as  id_empresa  
 			,  tarefa.id as  id  
+			,  tarefa.id_usuario as  id_usuario  
 			,  tarefa.descricao as  descricao  
 			, to_char(tarefa.agenda, 'YYYY-MM-DD HH24:MI GMT-0300') as agenda  
 			, to_char(tarefa.inicial, 'YYYY-MM-DD HH24:MI GMT-0300') as inicial  
 			, to_char(tarefa.final, 'YYYY-MM-DD HH24:MI GMT-0300') as final  
 			,  tarefa.qtd_total as  qtd_total  
+			,  tarefa.qtd_erro as  qtd_erro  
 			,  tarefa.status as  status  
 			,  tarefa.user_insert as  user_insert  
 			,  tarefa.user_update as  user_update  
@@ -82,11 +88,13 @@ if (params) {
 		strSql = `select   
 			   tarefa.id_empresa as  id_empresa  
 			,  tarefa.id as  id  
+			,  tarefa.id_usuario as  id_usuario  
 			,  tarefa.descricao as  descricao  
 			, to_char(tarefa.agenda, 'YYYY-MM-DD HH24:MI GMT-0300') as agenda  
 			, to_char(tarefa.inicial, 'YYYY-MM-DD HH24:MI GMT-0300') as inicial  
 			, to_char(tarefa.final, 'YYYY-MM-DD HH24:MI GMT-0300') as final  
 			,  tarefa.qtd_total as  qtd_total  
+			,  tarefa.qtd_erro as  qtd_erro  
 			,  tarefa.status as  status  
 			,  tarefa.user_insert as  user_insert  
 			,  tarefa.user_update as  user_update  
@@ -100,22 +108,26 @@ if (params) {
  exports.insertTarefa = function(tarefa){
 	strSql = `insert into tarefas (
 		     id_empresa 
+		 ,   id_usuario 
 		 ,   descricao 
 		 ,   agenda 
 		 ,   inicial 
 		 ,   final 
 		 ,   qtd_total 
+		 ,   qtd_erro 
 		 ,   status 
 		 ,   user_insert 
 		 ,   user_update 
 		 ) 
 		 values(
 		     ${tarefa.id_empresa} 
+		 ,   ${tarefa.id_usuario} 
 		 ,   '${tarefa.descricao}' 
 		 ,   '${tarefa.agenda.replace('GMT-0300', '').replace('T', ' ').replace('Z', '')}' 
 		 ,   '${tarefa.inicial.replace('GMT-0300', '').replace('T', ' ').replace('Z', '')}' 
 		 ,   '${tarefa.final.replace('GMT-0300', '').replace('T', ' ').replace('Z', '')}' 
 		 ,   ${tarefa.qtd_total} 
+		 ,   ${tarefa.qtd_erro} 
 		 ,   ${tarefa.status} 
 		 ,   ${tarefa.user_insert} 
 		 ,   ${tarefa.user_update} 
@@ -126,11 +138,13 @@ if (params) {
 /* CRUD - UPDATE */
  exports.updateTarefa = function(tarefa){
 	strSql = `update   tarefas set  
-		     descricao = '${tarefa.descricao}' 
+		     id_usuario = ${tarefa.id_usuario} 
+ 		 ,   descricao = '${tarefa.descricao}' 
  		 ,   agenda = '${tarefa.agenda.replace('GMT-0300', '').replace('T', ' ').replace('Z', '')}' 
  		 ,   inicial = '${tarefa.inicial.replace('GMT-0300', '').replace('T', ' ').replace('Z', '')}' 
  		 ,   final = '${tarefa.final.replace('GMT-0300', '').replace('T', ' ').replace('Z', '')}' 
  		 ,   qtd_total = ${tarefa.qtd_total} 
+ 		 ,   qtd_erro = ${tarefa.qtd_erro} 
  		 ,   status = ${tarefa.status} 
  		 ,   user_insert = ${tarefa.user_insert} 
  		 ,   user_update = ${tarefa.user_update} 

@@ -10,12 +10,16 @@ const qs = require('querystring');
 const router = express.Router();
 
 
-router.get('/api/bling/recebercode', async function(req, res) {
+router.get('/api/bling/recebercode/:id_empresa', async function(req, res) {
 
     let empresa = {};
 
+    const id_empresa = req.params.id_empresa;;
 
-    console.log("ENTREI NA recebercode");
+    console.log(`ENTREI Na recebercode ==> ${id_empresa} code: " ${req.query.code}`);
+
+    //res.status(200).json(req.query.code);
+
 
     if (req.query.code) {
 
@@ -23,23 +27,35 @@ router.get('/api/bling/recebercode', async function(req, res) {
 
         try {
 
-            const retorno = await blingSrv.getToken();
+            const token = await blingSrv.getToken();
 
-            variaveis.setAcessToken(retorno.access_token);
+            variaveis.setAcessToken(token.access_token);
 
-            variaveis.setRefreshToken(retorno.refresh_token);
+            variaveis.setRefreshToken(token.refresh_token);
+
+
+            /*
+                        const categorias = await blingSrv.getCategorias();
+
+                        console.log("categorias", categorias);
+            */
 
             try {
 
-                const emp = await empresaSrv.getEmpresa(2);
+                const emp = await empresaSrv.getEmpresa(id_empresa);
 
                 emp.code = req.query.code;
-                emp.access_token = retorno.access_token;
-                emp.refresh_token = retorno.refresh_token;
+                emp.access_token = token.access_token;
+                emp.refresh_token = token.refresh_token;
 
                 const empAlterada = await empresaSrv.updateEmpresa(emp);
 
                 console.log(empAlterada);
+
+
+                const depositos = await blingSrv.getDepositos();
+
+                console.log("depositos", depositos);
 
                 res.status(200).json(req.query.code);
 
@@ -54,13 +70,12 @@ router.get('/api/bling/recebercode', async function(req, res) {
             if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
-                res.status(200).json({ message: error.response.status });
+                res.status(200).json({ message: error.response.data });
             }
         }
 
 
     }
-
 
 
 })
@@ -219,32 +234,6 @@ router.get('/api/bling/getprodutos', function(req, response) {
 
 })
 
-router.get('/api/bling/getdepositos', async function(req, res) {
-    const options = {
-        url: `https://www.bling.com.br/Api/v3/depositos`,
-        method: 'get',
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${variaveis.getAcessToken()}`
-        }
-    }
-
-    const depositos = await axios(options);
-
-    res.status(200).json(depositos);
-
-    /*
-    axios(options).then(function(res) {
-        const retorno = res.data.data
-        response.status(200).json(retorno);
-    }).catch(function(err) {
-        console.log("error = " + err);
-        const retorno = { message: err.message };
-        response.status(200).json(retorno);
-    });
-*/
-
-})
 
 router.get('/api/bling/getsaldos', function(req, response) {
     const options = {
@@ -269,27 +258,6 @@ router.get('/api/bling/getsaldos', function(req, response) {
 
 })
 
-router.get('/api/bling/getcategorias', function(req, response) {
-    const options = {
-        url: `https://www.bling.com.br/Api/v3/categorias/produtos`,
-        method: 'get',
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${variaveis.getAcessToken()}`
-        }
-    }
-
-    axios(options).then(function(res) {
-        const retorno = res.data.data
-        response.status(200).json(retorno);
-    }).catch(function(err) {
-        console.log("error = " + err);
-        const retorno = { message: err.message };
-        response.status(200).json(retorno);
-    });
-
-
-})
 
 router.get('/api/bling/getprodutofullbyid/:id_produto', async function(req, resp) {
 
@@ -365,7 +333,71 @@ router.get('/api/bling/sincronizarsaldo', async function(req, resp) {
 })
 
 
+router.get('/api/bling/getcategorias', async function(req, res) {
+    const options = {
+        url: `https://www.bling.com.br/Api/v3/categorias/produtos`,
+        method: 'get',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${variaveis.getAcessToken()}`
+        }
+    }
 
+    try {
+
+        const categorias = await blingSrv.getCategorias();
+
+        res.status(200).json(categorias);
+
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            res.status(200).json(error.response.data);
+        } else {
+            if (err.name == 'MyExceptionDB') {
+                res.status(409).json(err);
+            } else {
+                res.status(500).json({ erro: 'BAK-END', tabela: 'empresa', message: err.message });
+            }
+        }
+    }
+
+})
+
+
+router.get('/api/bling/getdepositos', async function(req, res) {
+    const options = {
+        url: `https://www.bling.com.br/Api/v3/depositos`,
+        method: 'get',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${variaveis.getAcessToken()}`
+        }
+    }
+
+    try {
+
+        const depositos = await blingSrv.getDepositos();
+
+        res.status(200).json(depositos);
+
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            res.status(200).json(error.response.data);
+        } else {
+            if (err.name == 'MyExceptionDB') {
+                res.status(409).json(err);
+            } else {
+                res.status(500).json({ erro: 'BAK-END', tabela: 'empresa', message: err.message });
+            }
+        }
+    }
+
+
+})
 
 
 module.exports = router;

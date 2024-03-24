@@ -3,25 +3,47 @@ const blingSrv = require('../service/blingService.js');
 const variaveis = require('../global/variaveis')
 
 
-exports.getAmbiente = async function(id_empresa) {
+exports.getAtualizaToken = async function(id_empresa) {
 
     try {
 
-        const emp = empresaSrv.getEmpresa(2);
+        const emp = await empresaSrv.getEmpresa(id_empresa);
 
-        variaveis.setCode(emp.code);
+        variaveis.setCode(emp.code.trim());
 
-        variaveis.setAcessToken(emp.access_token);
+        variaveis.setAcessToken(emp.access_token.trim());
 
-        variaveis.setRefreshToken(emp.refresh_token);
+        variaveis.setRefreshToken(emp.refresh_token.trim());
 
-        variaveis.setIdDeposito(emp.id_deposito);
+        variaveis.setIdDeposito(emp.id_deposito.trim());
 
-        variaveis.setIdCategoria(emp.id_categoria);
+        variaveis.setIdCategoria(emp.id_categoria.trim());
 
-        await blingSrv.getRefreshToken();
+        retorno = await blingSrv.getRefreshToken();
 
-        console.log("TOKEN ATUALIZADO COM SUCESSO!")
+        try {
+
+            emp.access_token = retorno.access_token;
+
+            emp.refresh_token = retorno.refresh_token;
+
+            const empAlterada = await empresaSrv.updateEmpresa(emp);
+
+            console.log(empAlterada);
+
+
+        } catch (error) {
+
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+            } else {
+                console.log("message: Falha Na Atualização da Empresa");
+            }
+
+        }
+
+        console.log("TOKEN ATUALIZADO COM SUCESSO!");
 
 
     } catch (error) {
@@ -29,12 +51,11 @@ exports.getAmbiente = async function(id_empresa) {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
-            res.status(200).json({ message: error.response.status });
         }
     }
 
 
-
+    return
 
 
 }

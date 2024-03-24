@@ -5,6 +5,7 @@ https://stackoverflow.com/questions/37576685/using-async-await-with-a-foreach-lo
 
 */
 const express = require('express');
+const bling = require('./util/bling,js')
 const axios = require('axios')
 
 const chgSrv = require('./service/chgService.js');
@@ -86,6 +87,11 @@ const chama50Paginas = async function() {
 }
 
 
+const refreshToken = async function() {
+    await bling.getAtualizaToken(1);
+    return;
+}
+
 
 app.use(allowCors);
 
@@ -101,4 +107,6 @@ app.listen(PORT, () => { console.log(`Servidor No Ar. Porta ${PORT}`); });
 
 //chama50Paginas()
 
-getSeteExemplos()
+//getSeteExemplos()
+
+refreshToken();
