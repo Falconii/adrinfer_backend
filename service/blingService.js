@@ -24,9 +24,19 @@ exports.getToken = async function() {
         data: qs.stringify(data),
     }
 
-    const retorno = await axios(options);
+    try {
 
-    return retorno.data
+        const retorno = await axios(options);
+
+        return retorno.data
+
+    } catch (error) {
+
+        throw error
+
+    }
+
+
 
 }
 
@@ -172,7 +182,7 @@ exports.getListaWork = async function() {
 
         let lista = await this.getProdutoSimpleByIds(idProdutos, ID_CATEGORIA)
 
-        //console.log("RETORNO ", lista);
+        console.log("RETORNO ", lista);
 
         lista.forEach(async(bling) => {
 

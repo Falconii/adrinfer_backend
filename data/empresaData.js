@@ -16,6 +16,7 @@ return [
 			Empresa.refresh_token, 
 			Empresa.id_deposito, 
 			Empresa.id_categoria, 
+			Empresa.key_chg, 
 			Empresa.ativo, 
 			Empresa.tempo, 
 			Empresa.user_insert, 
@@ -37,6 +38,7 @@ exports.getEmpresa = function(id){
 			,  emp.refresh_token as  refresh_token  
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
+			,  emp.key_chg as  key_chg  
 			,  emp.ativo as  ativo  
 			,  emp.tempo as  tempo  
 			,  emp.user_insert as  user_insert  
@@ -118,6 +120,7 @@ if (params) {
 			,  emp.refresh_token as  refresh_token  
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
+			,  emp.key_chg as  key_chg  
 			,  emp.ativo as  ativo  
 			,  emp.tempo as  tempo  
 			,  emp.user_insert as  user_insert  
@@ -139,6 +142,7 @@ if (params) {
 			,  emp.refresh_token as  refresh_token  
 			,  emp.id_deposito as  id_deposito  
 			,  emp.id_categoria as  id_categoria  
+			,  emp.key_chg as  key_chg  
 			,  emp.ativo as  ativo  
 			,  emp.tempo as  tempo  
 			,  emp.user_insert as  user_insert  
@@ -161,6 +165,7 @@ if (params) {
 		 ,   refresh_token 
 		 ,   id_deposito 
 		 ,   id_categoria 
+		 ,   key_chg 
 		 ,   ativo 
 		 ,   tempo 
 		 ,   user_insert 
@@ -178,6 +183,7 @@ if (params) {
 		 ,   '${empresa.refresh_token}' 
 		 ,   '${empresa.id_deposito}' 
 		 ,   '${empresa.id_categoria}' 
+		 ,   '${empresa.key_chg}' 
 		 ,   '${empresa.ativo}' 
 		 ,   ${empresa.tempo} 
 		 ,   ${empresa.user_insert} 
@@ -200,6 +206,7 @@ if (params) {
  		 ,   refresh_token = '${empresa.refresh_token}' 
  		 ,   id_deposito = '${empresa.id_deposito}' 
  		 ,   id_categoria = '${empresa.id_categoria}' 
+ 		 ,   key_chg = '${empresa.key_chg}' 
  		 ,   ativo = '${empresa.ativo}' 
  		 ,   tempo = ${empresa.tempo} 
  		 ,   user_insert = ${empresa.user_insert} 

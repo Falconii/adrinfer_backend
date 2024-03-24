@@ -43,6 +43,7 @@ CREATE TABLE Public.empresas (
 		refresh_token varchar(100)  NOT NULL  , 
 		id_deposito varchar(20)  NOT NULL  , 
 		id_categoria varchar(20)  NOT NULL  , 
+		key_chg varchar(50)  NOT NULL  , 
 		ativo char(1)  NOT NULL  , 
 		tempo int4  NOT NULL  , 
 		user_insert int4  NOT NULL  , 

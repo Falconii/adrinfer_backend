@@ -302,6 +302,15 @@
                             "validacao": []
                         },
                         {
+                            "name": "key_chg",
+                            "type": "varchar",
+                            "length": 50,
+                            "precision": 0,
+                            "nulo": "N",
+                            "padrao": "",
+                            "validacao": []
+                        },
+                        {
                             "name": "ativo",
                             "type": "char",
                             "length": 1,

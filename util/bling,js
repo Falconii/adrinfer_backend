@@ -9,6 +9,8 @@ exports.getAtualizaToken = async function(id_empresa) {
 
         const emp = await empresaSrv.getEmpresa(id_empresa);
 
+        console.log("getAtualizaToken Empresa: => ", emp);
+
         variaveis.setCode(emp.code.trim());
 
         variaveis.setAcessToken(emp.access_token.trim());
@@ -18,6 +20,8 @@ exports.getAtualizaToken = async function(id_empresa) {
         variaveis.setIdDeposito(emp.id_deposito.trim());
 
         variaveis.setIdCategoria(emp.id_categoria.trim());
+
+        variaveis.setKeyChg(emp.key_chg)
 
         retorno = await blingSrv.getRefreshToken();
 

@@ -59,14 +59,17 @@ const getCatalogo = async function(pagina) {
 const getSeteExemplos = async function() {
 
     const produtos = [
-        { codigo: "1386530" },
-        { codigo: "0218223" },
-        { codigo: "0906154" },
-        { codigo: "0533823" },
-        { codigo: "0081114" },
-        { codigo: "1751034" }
-
-
+        { codigo: '0212234' }, { codigo: '1110784' },
+        { codigo: '1805116' }, { codigo: '0212182' },
+        { codigo: '0212225' }, { codigo: '0846398' },
+        { codigo: '0661031' }, { codigo: '1132762' },
+        { codigo: '0555980' }, { codigo: '1410065' },
+        { codigo: '1207028' }, { codigo: '0548110' },
+        { codigo: '0190700' }, { codigo: '0037597' },
+        { codigo: '1189499' }, { codigo: '1207657' },
+        { codigo: '1751034' }, { codigo: '0081114' },
+        { codigo: '0533823' }, { codigo: '0906154' },
+        { codigo: '0218223' }, { codigo: '1386530' }
     ];
 
     for (const [index, dado] of produtos.entries()) {
@@ -92,6 +95,12 @@ const refreshToken = async function() {
     return;
 }
 
+const iniciar = async function() {
+
+    await getSeteExemplos();
+    await refreshToken();
+
+}
 
 app.use(allowCors);
 
@@ -107,6 +116,4 @@ app.listen(PORT, () => { console.log(`Servidor No Ar. Porta ${PORT}`); });
 
 //chama50Paginas()
 
-//getSeteExemplos()
-
-refreshToken();
+iniciar();

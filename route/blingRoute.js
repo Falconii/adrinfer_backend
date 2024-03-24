@@ -18,9 +18,6 @@ router.get('/api/bling/recebercode/:id_empresa', async function(req, res) {
 
     console.log(`ENTREI Na recebercode ==> ${id_empresa} code: " ${req.query.code}`);
 
-    //res.status(200).json(req.query.code);
-
-
     if (req.query.code) {
 
         variaveis.setCode(req.query.code);
@@ -33,11 +30,19 @@ router.get('/api/bling/recebercode/:id_empresa', async function(req, res) {
 
             variaveis.setRefreshToken(token.refresh_token);
 
-
             /*
-                        const categorias = await blingSrv.getCategorias();
+            try {
 
-                        console.log("categorias", categorias);
+                //const categorias = await blingSrv.getCategorias();
+
+                //console.log("categorias", categorias);
+
+            } catch (error) {
+
+                console.log(error.response.data);
+                console.log(error.response.status);
+            }
+
             */
 
             try {
@@ -53,9 +58,9 @@ router.get('/api/bling/recebercode/:id_empresa', async function(req, res) {
                 console.log(empAlterada);
 
 
-                const depositos = await blingSrv.getDepositos();
+                //const depositos = await blingSrv.getDepositos();
 
-                console.log("depositos", depositos);
+                //console.log("depositos", depositos);
 
                 res.status(200).json(req.query.code);
 
@@ -75,6 +80,8 @@ router.get('/api/bling/recebercode/:id_empresa', async function(req, res) {
         }
 
 
+    } else {
+        res.status(200).json({ "message": "Não Recebi O Código!" });
     }
 
 
@@ -289,36 +296,39 @@ router.get('/api/bling/sincronizarsaldo', async function(req, resp) {
     let codigoProdutos = [];
     let contador = 0;
     try {
+        console.log("BUSCAR LISTWORK");
         const listaWork = await blingSrv.getListaWork();
         listaWork.forEach(produto => {
             idsProdutos.push(produto.id)
             codigoProdutos.push({ codigo: produto.codigo })
         });
-        //console.log(idsProdutos);
-        //console.log("BUSCAR SALDOS BLING");
+        console.log("", idsProdutos);
+        console.log("", idsProdutos);
+        console.log("BUSCAR SALDOS BLING");
         const saldosBling = await blingSrv.getSaldos(idsProdutos)
-            //console.log(saldosBling);
-            //console.log("BUSCAR SALDOS CHG");
-            //console.log(codigoProdutos)
+        console.log(saldosBling);
+        console.log("BUSCAR SALDOS CHG");
+        console.log(codigoProdutos)
         saldosCHG = await chgSrv.getProdutoByCodigoArray(codigoProdutos)
-            //console.log(saldosCHG)
+        console.log("SALDOS CHG ENCONTRADOS!");
+        console.log(saldosCHG)
         listaWork.forEach(item => {
-            //console.log("item", item);
+            console.log("item", item);
             var bling = saldosBling.filter(x => x.produto.id === item.id);
             if (bling) {
-                //console.log("bling", bling);
-                //console.log("bling.produto", bling[0].produto.id);
+                console.log("bling", bling);
+                console.log("bling.produto", bling[0].produto.id);
                 item.saldo_bling = bling[0].saldoFisicoTotal;
             }
             var chg = saldosCHG.filter(x => x.codigo === item.codigo);
             if (chg) {
-                //console.log("chg", chg);
+                console.log("chg", chg);
                 item.saldo_chg = chg[0].estoque;
             }
         })
         for (const [index, dado] of listaWork.entries()) {
             if (dado.saldo_bling != dado.saldo_chg) {
-                console.log("Produto - ", dado.id, dado.nome, dado.saldo_bling, dado.saldo_chg);
+                console.log("Produto - ", dado.id, dado.codigo, dado.nome, dado.saldo_bling, dado.saldo_chg);
                 await blingSrv.postAjustaSaldo(dado.id_deposito, dado.id, dado.saldo_chg, dado.preco, "AJUSTE AUTOMÁTICO CHG")
                 contador++;
             }
@@ -326,6 +336,7 @@ router.get('/api/bling/sincronizarsaldo', async function(req, resp) {
         const men = `Fim Do Processamento. ${contador == 0 ? 'NENHUM PRODUTO AJUSTADO!': contador.toString()+' PRODUTOS AJUSTADOS!'}`;
         resp.status(200).json({ message: men });
     } catch (err) {
+        console.log(err);
         resp.status(200).json(err);
     }
 

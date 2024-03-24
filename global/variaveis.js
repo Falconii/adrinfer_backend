@@ -4,9 +4,11 @@ let REFRESH_TOKEN = "64019c25fd1e3a32eb72f141c9b50981be944860"
 
 let CODE = "8e081863b4f491d24b91bb9402b9d77067b05dcc"
 
-let IDDEPOSITO = 14887604950;
+let IDDEPOSITO = "14887604950";
 
-let IDCATEGORIA = 9260994;
+let IDCATEGORIA = "9260994";
+
+let KEYCHG = "cuJDtZKp55fFzsUZYM4XDgGYbGNurkFX";
 
 exports.setAcessToken = function(value) {
 
@@ -93,6 +95,22 @@ exports.getIdCategoria = function() {
 exports.setIdCategoria = function(value) {
 
     IDCATEGORIA = value;
+
+    return;
+
+}
+
+
+exports.getKeyChg = function() {
+
+    return KEYCHG.trim();
+
+}
+
+
+exports.setKeyChg = function(value) {
+
+    KEYCHG = value;
 
     return;
 
